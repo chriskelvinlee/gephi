@@ -25,6 +25,7 @@ import org.gephi.ranking.api.RankingModel;
 import org.gephi.ranking.api.RankingController;
 import org.gephi.ranking.api.ColorTransformer;
 import org.gephi.ranking.api.SizeTransformer;
+import org.gephi.ranking.api.XYZTransformer;
 import org.gephi.ranking.api.Transformer;
 import org.gephi.ranking.api.NodeRanking;
 import org.gephi.ranking.api.Ranking;
@@ -97,6 +98,11 @@ public class RankingControllerImpl implements RankingController {
         if (refreshed) {
             rankingModelImpl.fireChangeEvent();
         }
+    }
+
+    public XYZTransformer getXYZTransformer(Ranking ranking) {
+        XYZTransformer xyzTransformer = TransformerFactory.getXYZTransformer(ranking);
+        return xyzTransformer;
     }
 
     public ColorTransformer getObjectColorTransformer(Ranking ranking) {

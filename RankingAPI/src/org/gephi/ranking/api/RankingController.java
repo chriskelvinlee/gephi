@@ -40,5 +40,7 @@ public interface RankingController {
 
     public SizeTransformer getLabelSizeTransformer(Ranking nodeRanking);
 
+    public XYZTransformer getXYZTransformer(Ranking nodeRanking);
+
     public Lookup getEventBus();
 }

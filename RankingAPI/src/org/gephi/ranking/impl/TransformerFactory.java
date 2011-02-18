@@ -22,6 +22,7 @@ package org.gephi.ranking.impl;
 
 import org.gephi.ranking.api.ColorTransformer;
 import org.gephi.ranking.api.SizeTransformer;
+import org.gephi.ranking.api.XYZTransformer;
 import org.gephi.ranking.api.NodeRanking;
 import org.gephi.ranking.api.Ranking;
 import java.awt.Color;
@@ -71,6 +72,15 @@ public class TransformerFactory {
         }
         colorTransformer.setRanking(ranking);
         return colorTransformer;
+    }
+
+    public static XYZTransformer getXYZTransformer(Ranking ranking) {
+        AbstractXYZTransformer xyzTransformer = new NodeXYZTransformer();
+        if (ranking instanceof NodeRanking) {
+            xyzTransformer = new NodeXYZTransformer();
+        }
+        xyzTransformer.setRanking(ranking);
+        return xyzTransformer;
     }
 
     public static SizeTransformer getLabelSizeTransformer(Ranking ranking) {
@@ -153,6 +163,21 @@ public class TransformerFactory {
             float size = getSize(normalizedValue);
             target.getEdgeData().getTextData().setSize(size);
             return Float.valueOf(size);
+        }
+    }
+
+    private static class NodeXYZTransformer extends AbstractXYZTransformer<Node>{
+
+        public Object transform(Node target, float normalizedValue) {
+            float res = getValue(normalizedValue);
+            if(getAxe().equals("X")){
+                target.getNodeData().setX(res);
+            }else if(getAxe().equals("Y")){
+                target.getNodeData().setY(res);
+            }else if(getAxe().equals("Z")){
+                target.getNodeData().setZ(res);
+            }
+            return Float.valueOf(res);
         }
     }
 }
